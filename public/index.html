@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script type="text/javascript" src="/asset/script/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="/asset/script/jquery-ui-1.9.2.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <link type="text/css" href="/asset/style/smoothness/jquery-ui-1.9.2.css" />
+</head>
+<body>
+<h1>Automatic Mood Board</h1>
+<form id="main">
+    <input id="keyword" type="text" />
+    <input id="search" type="button" />
+</form>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var socket = io.connect('http://localhost');
+        socket.on('news', function (data) {
+            console.log(data);
+        });
+
+
+        //get extend keyword
+        $('#search').click(function(){
+            var data = $('#main').serialize();
+            socket.emit('extend', { my: data });
+            socket.emit('baidu', { my: data });
+        });
+
+        //get extend keyword
+        socket.on('extend', function (data) {
+            console.log(data);
+        });
+
+        //get baidu image search result
+        socket.on('baidu', function (data) {
+            console.log(data);
+        });
+
+        //get google image search result
+        socket.on('google', function (data) {
+            console.log(data);
+        });
+
+        //get image analyse result
+        socket.on('image', function (data) {
+            console.log(data);
+        })
+
+
+    });
+</script>
+</body>
+</html>
